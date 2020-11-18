@@ -11,6 +11,8 @@ body {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   cursor: pointer;
+  width: auto;
+  height: auto;
 }
 
 .photos-grid {
@@ -73,6 +75,14 @@ body {
   margin-bottom: 1.25rem;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -84,6 +94,44 @@ body {
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
+.self-end {
+  align-self: flex-end;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-gray-900 {
+  --text-opacity: 1;
+  color: #1a202c;
+  color: rgba(26, 32, 44, var(--text-opacity));
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.absolute {
+  position: absolute;
 }
 
 /* Pagination */
@@ -105,6 +153,50 @@ body {
   width: 35px;
   @apply text-sm;
   @apply truncate;
+}
+
+/* Modal */
+
+.modal-overlay {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: scroll;
+}
+
+.modal {
+  position: relative;
+  margin-top: 5vh;
+  top: auto;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  width: 1000px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  @apply rounded-lg;
+}
+
+.modal-mini {
+  width: 600px;
+}
+
+.modal.modal-promotion {
+  background-color: transparent;
+  /* background-image: url('/img/modalUpgradeWallpaper.png'); */
+  background-repeat: no-repeat;
 }
 
 /* Icons */

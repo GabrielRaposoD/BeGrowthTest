@@ -3,10 +3,8 @@ import { useState } from 'react';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import ReactPaginate from 'react-paginate';
-import Image from 'next/image';
 
 // MARK: Icons
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 // MARK: Interfaces
@@ -14,6 +12,7 @@ import { Photo } from '@lib/types';
 
 // MARK: Components
 import PhotoCard from '@components/PhotoCard';
+import PhotoModal from '@components/PhotoModal';
 
 // MARK: Data Fetching
 export const getStaticProps: GetStaticProps = async () => {
@@ -47,6 +46,10 @@ export default function Index({
   const currentPageData = data.slice(offset, offset + PER_PAGE);
   const pageCount = Math.ceil(data.length / PER_PAGE);
 
+  // MARK: Modal Related
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [modalPhoto, setModalPhoto] = useState<Photo>(null);
+
   // MARK: Functions & Handles
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
@@ -65,6 +68,11 @@ export default function Index({
     <>
       <NextSeo title='Be Growth' description='Teste para a empresa Be Growth' />
       <div className='flex flex-col px-5 my-5'>
+        <PhotoModal
+          isOpen={isOpen}
+          photo={modalPhoto}
+          onClose={() => setOpen(false)}
+        />
         <div className='photos-grid mb-10'>
           {currentPageData
             .filter((e) => {
@@ -74,7 +82,13 @@ export default function Index({
               return true;
             })
             .map((photo: Photo, i) => (
-              <PhotoCard key={i} photo={photo} setFavorite={setFavorite} />
+              <PhotoCard
+                key={i}
+                photo={photo}
+                setFavorite={setFavorite}
+                setModalPhoto={setModalPhoto}
+                setOpen={setOpen}
+              />
             ))}
         </div>
         <ReactPaginate

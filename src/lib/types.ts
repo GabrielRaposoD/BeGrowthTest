@@ -6,3 +6,16 @@ export interface Photo {
   thumbnailUrl: string;
   isFavorite: boolean;
 }
+
+export interface PhotoCardProps {
+  photo: Photo;
+  setFavorite: Function;
+  setOpen?: Function;
+  setModalPhoto?: Function;
+}
+
+export interface PhotoModalProps {
+  isOpen: boolean;
+  onClose?: Function;
+  photo: Photo;
+}
