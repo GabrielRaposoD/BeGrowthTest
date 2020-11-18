@@ -17,7 +17,7 @@ export default function PhotoCard({
   return (
     <div className='photo-card relative rounded-lg'>
       <div
-        className='absolute z-0 w-full h-full'
+        className='absolute z-10 w-full h-full'
         onClick={() => {
           setModalPhoto(photo);
           setOpen(true);
@@ -36,12 +36,12 @@ export default function PhotoCard({
       <div className=' flex flex-row items-center justify-between'>
         {photo.isFavorite ? (
           <AiFillStar
-            className='star-icon relative z-10'
+            className='star-icon relative z-20 text-2xl'
             onClick={() => setFavorite(photo.id)}
           />
         ) : (
           <AiOutlineStar
-            className='star-icon relative z-10'
+            className='star-icon relative z-20 text-2xl'
             onClick={() => setFavorite(photo.id)}
           />
         )}

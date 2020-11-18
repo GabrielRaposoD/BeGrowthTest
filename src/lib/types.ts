@@ -16,6 +16,7 @@ export interface PhotoCardProps {
 
 export interface PhotoModalProps {
   isOpen: boolean;
-  onClose?: Function;
   photo: Photo;
+  setFavorite: Function;
+  onClose: Function;
 }

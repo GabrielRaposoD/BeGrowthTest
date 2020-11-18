@@ -72,6 +72,7 @@ export default function Index({
           isOpen={isOpen}
           photo={modalPhoto}
           onClose={() => setOpen(false)}
+          setFavorite={setFavorite}
         />
         <div className='photos-grid mb-10'>
           {currentPageData

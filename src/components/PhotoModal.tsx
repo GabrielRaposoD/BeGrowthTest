@@ -2,9 +2,12 @@
 import Image from 'next/image';
 import React from 'react';
 import ReactModal from 'react-modal';
-import { FaTimes } from 'react-icons/fa';
 
 ReactModal.setAppElement('#__next');
+
+// MARK: Icons
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { FaTimes } from 'react-icons/fa';
 
 // MARK: Interfaces
 import { PhotoModalProps } from '@lib/types';
@@ -14,6 +17,7 @@ export default function AddSiteModal({
   isOpen,
   onClose,
   photo,
+  setFavorite,
 }: PhotoModalProps) {
   return (
     <ReactModal
@@ -38,6 +42,20 @@ export default function AddSiteModal({
             height={500}
           />
           <p className='mt-5'>{photo.title}</p>
+          <div className=' flex flex-row items-center justify-between mt-5'>
+            {photo.isFavorite ? (
+              <AiFillStar
+                className='star-icon text-3xl'
+                onClick={() => setFavorite(photo.id)}
+              />
+            ) : (
+              <AiOutlineStar
+                className='star-icon text-3xl'
+                onClick={() => setFavorite(photo.id)}
+              />
+            )}
+            <p>Album: {photo.albumId}</p>
+          </div>
         </div>
       ) : (
         onClose()
