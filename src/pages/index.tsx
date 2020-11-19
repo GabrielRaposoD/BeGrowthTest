@@ -13,6 +13,7 @@ import { Photo } from '@lib/types';
 // MARK: Components
 import PhotoCard from '@components/PhotoCard';
 import PhotoModal from '@components/PhotoModal';
+import Header from '@components/Header';
 
 // MARK: Data Fetching
 export const getStaticProps: GetStaticProps = async () => {
@@ -41,10 +42,17 @@ export default function Index({
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [data, setData] = useState<Photo[]>(parsedData);
   const [filter, setFilter] = useState<string>('');
+  const [favoriteOnly, setFavoriteOnly] = useState<boolean>(false);
   const PER_PAGE = 18;
   const offset = currentPage * PER_PAGE;
-  const currentPageData = data.slice(offset, offset + PER_PAGE);
-  const pageCount = Math.ceil(data.length / PER_PAGE);
+  const currentPageData = filterData(filter, data, favoriteOnly).slice(
+    offset,
+    offset + PER_PAGE
+  );
+
+  const pageCount = Math.ceil(
+    filterData(filter, data, favoriteOnly).length / PER_PAGE
+  );
 
   // MARK: Modal Related
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -67,7 +75,13 @@ export default function Index({
   return (
     <>
       <NextSeo title='Be Growth' description='Teste para a empresa Be Growth' />
-      <div className='flex flex-col px-5 my-5'>
+      <Header
+        setFilter={setFilter}
+        setFavoriteOnly={setFavoriteOnly}
+        filter={filter}
+        favoriteOnly={favoriteOnly}
+      />
+      <div className='flex flex-col p-5'>
         <PhotoModal
           isOpen={isOpen}
           photo={modalPhoto}
@@ -75,22 +89,15 @@ export default function Index({
           setFavorite={setFavorite}
         />
         <div className='photos-grid mb-10'>
-          {currentPageData
-            .filter((e) => {
-              if (filter.length > 0) {
-                return e.title.toLowerCase().includes(filter.toLowerCase());
-              }
-              return true;
-            })
-            .map((photo: Photo, i) => (
-              <PhotoCard
-                key={i}
-                photo={photo}
-                setFavorite={setFavorite}
-                setModalPhoto={setModalPhoto}
-                setOpen={setOpen}
-              />
-            ))}
+          {currentPageData.map((photo: Photo, i) => (
+            <PhotoCard
+              key={i}
+              photo={photo}
+              setFavorite={setFavorite}
+              setModalPhoto={setModalPhoto}
+              setOpen={setOpen}
+            />
+          ))}
         </div>
         <ReactPaginate
           previousLabel={<FaChevronLeft className='text-2xl' />}
@@ -100,7 +107,7 @@ export default function Index({
           pageCount={pageCount}
           onPageChange={handlePageClick}
           containerClassName={'flex flex-row items-center'}
-          activeClassName={'pagination-item-active'}
+          activeClassName={'pagination-active'}
           pageClassName={
             'pagination-item flex flex-row items-center justify-center truncate'
           }
@@ -108,4 +115,29 @@ export default function Index({
       </div>
     </>
   );
+}
+
+function filterData(filter, data, favoriteOnly) {
+  let filteredData;
+  favoriteOnly
+    ? (filteredData = data
+        .filter((e) => {
+          if (e.isFavorite === true) {
+            return true;
+          }
+        })
+        .filter((e) => {
+          if (filter.length > 0) {
+            return e.title.toLowerCase().includes(filter.toLowerCase());
+          }
+          return true;
+        }))
+    : (filteredData = data.filter((e) => {
+        if (filter.length > 0) {
+          return e.title.toLowerCase().includes(filter.toLowerCase());
+        }
+        return true;
+      }));
+
+  return filteredData;
 }

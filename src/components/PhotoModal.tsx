@@ -12,8 +12,7 @@ import { FaTimes } from 'react-icons/fa';
 // MARK: Interfaces
 import { PhotoModalProps } from '@lib/types';
 
-// MARK: AddSiteModalDeclaration
-export default function AddSiteModal({
+export default function PhotoModal({
   isOpen,
   onClose,
   photo,
